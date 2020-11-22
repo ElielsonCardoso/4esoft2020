@@ -18,9 +18,8 @@ public class App extends JDialog {
     }
 
     public static void main(String[] args) {
-
         App app = new App();
-        app.setSize(350, 350);
+        app.setSize(400, 400);
         app.setVisible(true);
     }
 
