@@ -29,16 +29,16 @@ public class App extends JDialog {
         final JPanel painel          = mainLayout();
         final JPanel firstRowPainel  = produtosLayout();
         final JPanel secondRowPainel = consumidoresLayout();
-        final JPanel thirdRowPainel  = createLayout(Color.gray, "Consumed job count:    ");
+        final JPanel thirdRowPainel  = createLayout(Color.gray, "Qtde jobs:    ");
 
-        final JTextField countJobs = new JTextField(40);
-        countJobs.setEnabled(false);
-        countJobs.setMaximumSize(countJobs.getPreferredSize());
+        final JTextField qtdeJobs = new JTextField(40);
+        qtdeJobs.setEnabled(false);
+        qtdeJobs.setMaximumSize(qtdeJobs.getPreferredSize());
 
-        thirdRowPainel.add(countJobs);
+        thirdRowPainel.add(qtdeJobs);
         thirdRowPainel.add(Box.createHorizontalGlue());
 
-        this.jobs.addJobQueueListener(jobCount -> countJobs.setText(String.valueOf(jobCount)));
+        this.jobs.AdicionarJobSimplesListener(jobCount -> qtdeJobs.setText(String.valueOf(jobCount)));
 
         painel.add(firstRowPainel);
         painel.add(secondRowPainel);
@@ -50,67 +50,65 @@ public class App extends JDialog {
     private JPanel mainLayout() {
 
         final JPanel painel = new JPanel();
-        panel.setBackground(Color.gray);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createRaisedBevelBorder());
+        painel.setBackground(Color.gray);
+        painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
+        painel.setBorder(BorderFactory.createRaisedBevelBorder());
         return painel;
     }
 
     private void startProducers(JButton addButton, JTextField fieldCount) {
-
         addButton.addActionListener(e -> {
-            JobProducer newProducer = new JobProducer(jobs);
-            produtos.add(newProducer);
+            JobProduto novoProduto = new JobProduto(jobs);
+            produtos.add(novoProduto);
             fieldCount.setText(String.valueOf(produtos.size()));
-            newProducer.start();
+            novoProduto.start();
         });
     }
 
     private JPanel produtosLayout() {
 
-        final JTextField fieldCount = new JTextField(40);
-        final JButton addButton = new JButton(" + ");
+        final JTextField contador = new JTextField(40);
+        final JButton btnAdicionar = new JButton(" + ");
 
-        this.startProducers(addButton, fieldCount);
-        addButton.setMaximumSize(addButton.getPreferredSize());
+        this.startProducers(btnAdicionar, contador);
+        btnAdicionar.setMaximumSize(btnAdicionar.getPreferredSize());
 
-        fieldCount.setEnabled(false);
-        fieldCount.setMaximumSize(fieldCount.getPreferredSize());
+        contador.setEnabled(false);
+        contador.setMaximumSize(contador.getPreferredSize());
 
-        final JPanel produtospainel = createLayout(Color.CYAN, "Producers:   ");
-        produtospainel.add(fieldCount);
-        produtospainel.add(addButton);
+        final JPanel produtospainel = createLayout(Color.BLUE, "Produtos:   ");
+        produtospainel.add(contador);
+        produtospainel.add(btnAdicionar);
         produtospainel.add(Box.createHorizontalGlue());
 
         return produtospainel;
     }
 
     private void startConsumers(JButton addButton, JTextField fieldCount) {
-
         addButton.addActionListener(e -> {
-            JobConsumidor newConsumer = new JobConsumidor(jobs);
-            consumidores.add(newConsumer);
+            JobConsumidor novoConsumidor = new JobConsumidor(jobs);
+            consumidores.add(novoConsumidor);
             fieldCount.setText(String.valueOf(consumidores.size()));
-            newConsumer.start();
+            novoConsumidor.start();
         });
     }
 
     private JPanel consumidoresLayout() {
 
-        final JTextField fieldCount = new JTextField(40);
-        fieldCount.setFont(new Font("Courier", Font.BOLD, 12));
+        final JTextField contador = new JTextField(40);
+        contador.setFont(new Font("Courier", Font.BOLD, 12));
 
-        final JButton addButton = new JButton(" + ");
+        final JButton btnAdicionar = new JButton(" + ");
 
-        this.startConsumers(addButton, fieldCount);
-        addButton.setMaximumSize(addButton.getPreferredSize());
+        this.startConsumers(btnAdicionar, contador);
+        btnAdicionar.setMaximumSize(btnAdicionar.getPreferredSize());
 
-        fieldCount.setEnabled(false);
-        fieldCount.setMaximumSize(fieldCount.getPreferredSize());
+        contador.setEnabled(false);
+        contador.setMaximumSize(contador.getPreferredSize());
 
-        final JPanel consumidorespainel = createLayout(Color.YELLOW, "Consumers: ");
-        consumidorespainel.add(fieldCount);
-        consumidorespainel.add(addButton);
+        final JPanel consumidorespainel = createLayout(Color.GREEN, "Consumidores: ");
+        consumidorespainel.add(contador);
+        consumidorespainel.add(btnAdicionar);
         consumidorespainel.add(Box.createHorizontalGlue());
 
         return consumidorespainel;
@@ -118,7 +116,7 @@ public class App extends JDialog {
 
     private JPanel createLayout(Color color, String s) {
 
-        final JPanel painel = new Jpainel();
+        final JPanel painel = new JPanel();
         painel.setLayout(new BoxLayout(painel, BoxLayout.X_AXIS));
         painel.setAlignmentX(Component.LEFT_ALIGNMENT);
         painel.setBackground(color);
